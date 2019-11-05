@@ -1,0 +1,38 @@
+LOGIC 
+*************************************************************************************************************************************************************************************************************************************
+To address with DP, work through the array, keeping track of the max at each position until you get to the last value of the array. You should start with the base cases defined before iterating through the remainder of the array.
+max @ position 0: value @ 0
+max @ position 1: either:
+value @ 0
+value @ 1
+from that point forward, the max of the next position is either:
+the current value at that position
+the max value found so far
+the max value from 2 positions back plus the current value
+keep track of the max at each position until you get to the last position of the array
+*************************************************************************************************************************************************************************************************************************************
+
+
+
+
+int maximum(int a, int b, int c)
+{
+    int max=(a>b)?a:b;
+    return ((max>c)?max:c);
+}
+// Complete the maxSubsetSum function below.
+int maxSubsetSum(vector <int> arr, int n) {
+    vector<int> maxvalu(n);
+    int curr_max;
+    for(int i=0;i<n;i++)
+    {
+        if(i==0)
+            maxvalu[i]=arr[i];
+        else if(i==1)
+            maxvalu[i]=max(arr[i],arr[i-1]);
+        else
+            maxvalu[i]=maximum(arr[i],curr_max,arr[i]+maxvalu[i-2]);
+        curr_max=maxvalu[i];
+    }
+    return curr_max;
+}
